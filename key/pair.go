@@ -64,6 +64,10 @@ func (p pair) WriteJWK(w io.Writer) (int64, error) {
 	return int64(c), err
 }
 
+type Keys struct {
+	Keys []jwk.Key `json:"keys"`
+}
+
 func NewPair(kid string, key interface{}) (Pair, error) {
 	switch k := key.(type) {
 	case *rsa.PrivateKey:
@@ -76,7 +80,10 @@ func NewPair(kid string, key interface{}) (Pair, error) {
 		if err != nil {
 			return nil, err
 		}
-		jsonWebKey, err := json.MarshalIndent(jwkKey, "", "  ")
+		jwkKey.Set(jwk.KeyUsageKey, "sig")
+		jwkKey.Set(jwk.KeyIDKey, kid)
+		keys := Keys{Keys: []jwk.Key{jwkKey}}
+		jsonWebKey, err := json.MarshalIndent(keys, "", "  ")
 		if err != nil {
 			return nil, err
 		}
@@ -98,7 +105,10 @@ func NewPair(kid string, key interface{}) (Pair, error) {
 		if err != nil {
 			return nil, err
 		}
-		jsonWebKey, err := json.MarshalIndent(jwkKey, "", "  ")
+		jwkKey.Set(jwk.KeyUsageKey, "sig")
+		jwkKey.Set(jwk.KeyIDKey, kid)
+		keys := Keys{Keys: []jwk.Key{jwkKey}}
+		jsonWebKey, err := json.MarshalIndent(keys, "", "  ")
 		if err != nil {
 			return nil, err
 		}
@@ -115,7 +125,10 @@ func NewPair(kid string, key interface{}) (Pair, error) {
 		if err != nil {
 			return nil, err
 		}
-		jsonWebKey, err := json.MarshalIndent(jwkKey, "", "  ")
+		jwkKey.Set(jwk.KeyUsageKey, "sig")
+		jwkKey.Set(jwk.KeyIDKey, kid)
+		keys := Keys{Keys: []jwk.Key{jwkKey}}
+		jsonWebKey, err := json.MarshalIndent(keys, "", "  ")
 		if err != nil {
 			return nil, err
 		}
@@ -139,7 +152,10 @@ func NewPair(kid string, key interface{}) (Pair, error) {
 		if err != nil {
 			return nil, err
 		}
-		jsonWebKey, err := json.MarshalIndent(jwkKey, "", "  ")
+		jwkKey.Set(jwk.KeyUsageKey, "sig")
+		jwkKey.Set(jwk.KeyIDKey, kid)
+		keys := Keys{Keys: []jwk.Key{jwkKey}}
+		jsonWebKey, err := json.MarshalIndent(keys, "", "  ")
 		if err != nil {
 			return nil, err
 		}
