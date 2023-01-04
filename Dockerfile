@@ -18,7 +18,7 @@ RUN apk add --no-cache --no-progress \
     libc-dev \
     upx
 
-RUN go get github.com/geofffranks/spruce/cmd/spruce@v1.29.0 && chmod +x /go/bin/spruce
+RUN go install github.com/geofffranks/spruce/cmd/spruce@v1.29.0 && chmod +x /go/bin/spruce
 COPY . .
 #RUN make test release
 RUN make release
